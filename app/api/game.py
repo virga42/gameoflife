@@ -5,6 +5,7 @@ from app import gol
 @bp.route('/game', methods=['POST'])
 def generation_request():
     data = request.get_json() or {}
+    # TODO add validation
     str_universe = data['universe']
     width = int(data['width'])
     
