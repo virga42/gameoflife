@@ -11,7 +11,7 @@ def generation_request():
     
     universe = gol.string_to_universe(str_universe, width)
 
-    u_output = gol.universe_to_string(gol.universe_generation(universe, width))
+    u_output = {"universe": gol.universe_to_string(gol.universe_generation(universe, width)), "width": width}
 
     response = jsonify(u_output)
     response.status_code = 201

@@ -14,20 +14,32 @@
     //size of canvas
     var cw = bw + (p*2) + 1;
     var ch = bh + (p*2) + 1;
+    //size of cell
+    var ce = 20
 
     var canvas = document.getElementById("myCanvas");
-    // var canvas = $('<canvas/>').attr({width: cw, height: ch}).appendTo('body');
+    
     canvas.setAttribute("width", cw);
     canvas.setAttribute("height", ch);
 
     var context = canvas.getContext("2d");
 
-    function drawBoard(){
-        context.fillStyle = "#f4dc42";
-        context.fillRect(10, 10, 20, 20);
-        context.fillRect(110, 110, 20, 20);
-        context.fillRect(110, 130, 20, 20);
-        context.fillRect(130, 130, 20, 20);
+    function drawBoard(universe){
+        u = universe;
+        u_arr = u.split('');
+        width = 3;
+        for (var x = 0; x < u_arr.length; x++) {
+          xpos = (((x % width) * ce) + p);
+          ypos = (((Math.floor(x/width)) * ce) + p);
+          if (u_arr[x] == 1) {
+            context.fillStyle = "#f4dc42";
+            context.fillRect(xpos, ypos, ce, ce);
+          }
+          else {
+            context.fillStyle = "#e9e9e9";
+            context.fillRect(xpos, ypos, ce, ce);
+          }
+        }
 
         for (var x = 0; x <= bw; x += 20) {
             context.moveTo(0.5 + x + p, p);
@@ -43,8 +55,15 @@
         context.stroke();
     }
 
-    drawBoard();
+    drawBoard("000111010");
+
+    function nextGen(){
+
+      drawBoard("010111111");
+      }
+    
 
   </script>
+  <button type="button" onclick="nextGen()">Next</button>
 </body> 
 </html>
