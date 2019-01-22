@@ -11,7 +11,7 @@ def string_to_universe(s, width):
     Takes a string of char and width of row and returns an array of rows
     If string is not divisible by width extra characters are dropped
     """   
-    if s == "":
+    if s == '':
         return []
     elif width == 0:
         return []
@@ -55,24 +55,23 @@ def neighbor_population(universe, width, row, col):
     
     # calculate candidate neighbor addresses
     neighbor_candidates = neighbor_addresses(row, col)
-    
-    # filter for valid addresses only
-    valid_neighbors_addy = [neighbor for neighbor in neighbor_candidates if address_valid(neighbor[0], neighbor[1], width, height)]
 
-    # sum the number of neighbors
+    # filter for valid addresses only
+    valid_neighbors_addresses = [neighbor for neighbor in neighbor_candidates \
+                                    if address_valid(neighbor[0], neighbor[1], width, height)]
+
     total = 0
-    for address in valid_neighbors_addy:
-        total+= universe[address[0]][address[1]]
+    for address in valid_neighbors_addresses:
+        total += universe[address[0]][address[1]]
 
     return total
 
-def generation(universe, width, row, col):
+def cell_reckoning(universe, width, row, col):
     """ 
     Array Int Int Int -> 0 or 1
     Returns the fate of a given cell based on the number of its neighbors
     0 for death and 1 for birth/survival
     """
-    
     n = neighbor_population(universe, width, row, col)
 
     if universe[row][col] == 1:
@@ -90,3 +89,24 @@ def generation(universe, width, row, col):
         else: 
             return 0
 
+def universe_generation(universe, width):
+    """ 
+    Array Int -> Array
+    Returns the universe with cells next generation
+    """
+    result = ""
+    for r in range(len(universe)):
+        for c in range(len(universe[r])):
+            result += str(cell_reckoning(universe, width, r, c))
+    return string_to_universe(result, width)
+
+
+def universe_to_string(universe):
+    """ 
+    Array -> String
+    Returns the string representation of a universe
+    """
+    s = ''
+    for row in universe:
+        s += ''.join(str(n) for n in row)
+    return s
