@@ -114,7 +114,6 @@
     function selectFigure() {
       let figureSelector = document.getElementById("figures");
       let selection = figureSelector.options[figureSelector.selectedIndex].value;
-      console.log(selection + ' ' + (typeof selection));
       Universe = eval(selection);
       drawBoard(Universe);
     }
@@ -131,15 +130,5 @@
     <option value="tumbler"?>Tumbler</option>
   </select>
   <button type="button" onclick="selectFigure()">Select</button>
-  <!-- <script>
-      let figures = ['glider', 'small exploder', 'exploder', 'ten cell row', 'lightweight spaceship'];
-      let fig_list = document.getElementById('figures');
-
-      figures.forEach(function(item){
-        let option = document.createElement('option');
-        option.value = item;
-        fig_list.appendChild(option);
-      });
-    </script> -->
 </body> 
 </html>
