@@ -7,28 +7,36 @@
   <canvas id="myCanvas"></canvas>
   <script type="text/javascript" language="javascript">
     //grid width and height
-    var bw = 800;
-    var bh = 600;
+    let bw = 800;
+    let bh = 600;
     //padding around grid
-    var p = 10;
+    let p = 10;
     //size of canvas
-    var cw = bw + (p*2) + 1;
-    var ch = bh + (p*2) + 1;
+    let cw = bw + (p*2) + 1;
+    let ch = bh + (p*2) + 1;
     //size of cell
-    var ce = 20
+    let ce = 20
 
-    var canvas = document.getElementById("myCanvas");
+    
+    let Universe = '000000000000000000000000000000000111000000001000000000000000000000000000000000000000000000'
+    
+    console.log(Universe);
+
+    let canvas = document.getElementById("myCanvas");
     
     canvas.setAttribute("width", cw);
     canvas.setAttribute("height", ch);
 
-    var context = canvas.getContext("2d");
+    let context = canvas.getContext("2d");
 
     function drawBoard(universe){
-        u = universe;
-        u_arr = u.split('');
-        width = 3;
-        for (var x = 0; x < u_arr.length; x++) {
+        u_arr = universe.split('');
+        width = 10;
+        
+        // clear the canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let x = 0; x < u_arr.length; x++) {
           xpos = (((x % width) * ce) + p);
           ypos = (((Math.floor(x/width)) * ce) + p);
           if (u_arr[x] == 1) {
@@ -41,12 +49,12 @@
           }
         }
 
-        for (var x = 0; x <= bw; x += 20) {
+        for (let x = 0; x <= bw; x += 20) {
             context.moveTo(0.5 + x + p, p);
             context.lineTo(0.5 + x + p, bh + p);
         }
 
-        for (var x = 0; x <= bh; x += 20) {
+        for (let x = 0; x <= bh; x += 20) {
             context.moveTo(p, 0.5 + x + p);
             context.lineTo(bw + p, 0.5 + x + p);
         }
@@ -55,15 +63,46 @@
         context.stroke();
     }
 
-    drawBoard("000111010");
+    drawBoard(Universe);
 
-    function nextGen(){
+    function nextGen(url, cFunction) {
+      const Data = {"universe:":Universe, "width":width};
+      const myRequest = {
+        headers:{
+          "content-type":"application/json"
+        },
+        body:Data,
+        method:"POST"
+      };
 
-      drawBoard("010111111");
+      fetch(url, myRequest)
+      .then(data=>{return data.json()})
+      .then(res=>{console.log(res)})
+      .then(error=>console.log(error))
+
       }
-    
 
+    function postDataHelper(url) {
+      let universe = {"universe": Universe, "width": width};
+      postData(url, universe);
+    }
+
+    function postData(url = ``, data = {}) {
+        fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(response => Universe = response['universe'])
+      .then(response => drawBoard(Universe))
+      .then(response => console.log('Success:', JSON.stringify(response)))
+      .catch(error => console.error('Error:', error));
+    }
+    
   </script>
-  <button type="button" onclick="nextGen()">Next</button>
+  <button type="button" onclick="postDataHelper('http://localhost:5000/api/game')">Next</button>
 </body> 
 </html>
