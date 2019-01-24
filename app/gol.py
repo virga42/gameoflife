@@ -37,7 +37,7 @@ def neighbor_addresses(row, col):
 def address_valid(row, col, width, height):
     """
     Int Int Int Int -> Boolean
-    Returns true is a given row and col is on a board with given width and height
+    Returns true if a given row and col is on a board with given width and height
     """
     if row < 0 or row > width-1:
         return False
