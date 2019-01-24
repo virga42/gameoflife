@@ -107,3 +107,34 @@ def universe_to_string(universe):
     for row in universe:
         s += ''.join(str(n) for n in row)
     return s
+
+def figure_creator(fig, width, height):
+    """
+    Array Int Int -> String
+    Returns the string of a universe with a given figure in its center
+    """
+    fig_h = len(fig)
+    fig_w = len(fig[0])
+    pad_top = int(((height - fig_h)) / 2)
+    pad_bot = height - pad_top - fig_h 
+    pad_lft = int(((width - fig_w) / 2))
+    pad_rgt = width - pad_lft - fig_w
+
+    str_top = pad_top * width * '0'
+
+    str_middle = ''
+    for r in fig:
+        str_r = ''.join(str(e) for e in r)
+        str_middle += (pad_lft * '0') + str_r + (pad_rgt * '0')
+
+    str_bot = pad_bot * width * '0'
+
+    return str_top + str_middle + str_bot    
+
+glider = [[0, 1, 0], [0, 0, 1], [1, 1, 1]]
+small_exploder = [[0, 1, 0], [1, 1, 1], [1, 0, 1], [0, 1, 0]]
+exploder = [[1, 0, 1, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1]]
+ten_cell_row = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
+lightweight_spaceship = [[0, 1, 1, 1, 1], [1, 0, 0, 0, 1], [0, 0, 0, 0, 1], [1, 0, 0, 1, 0]]
+tumbler = [[0, 1, 1, 0, 1, 1, 0], [0, 1, 1, 0, 1, 1, 0], [0, 0, 1, 0, 1, 0, 0], [1, 0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0, 1], [1, 1, 0, 0, 0, 1, 1]] 
+
