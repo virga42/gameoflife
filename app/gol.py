@@ -4,7 +4,6 @@ Conway's Game of Life
 Implemented by Tom Callahan
 1/20/19
 """
-
 import functools
 
 def string_to_universe(s, width):
