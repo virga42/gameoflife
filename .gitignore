@@ -19,3 +19,7 @@ venv.bak/
 # Flask stuff
 instance/
 .webassets-cache
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
