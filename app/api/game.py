@@ -14,6 +14,6 @@ def generation_request():
     u_output = {"universe": gol.universe_to_string(gol.universe_generation(universe, width)), "width": width}
 
     response = jsonify(u_output)
-    response.status_code = 201
+    response.status_code = 200
     response.headers['Location'] = "api/game"
     return response
