@@ -27,8 +27,6 @@
 
     let Universe = defaultFigure; 
 
-    // console.log(Universe);
-
     let canvas = document.getElementById("myCanvas");
     
     canvas.setAttribute("width", cw);
@@ -68,7 +66,7 @@
 
         context.strokeStyle = "black";
         context.stroke();
-    }
+    };
 
     drawBoard(Universe);
 
@@ -83,16 +81,24 @@
       };
 
       fetch(url, myRequest)
-      .then(data=>{return data.json()})
-      .then(res=>{console.log(res)})
-      .then(error=>console.log(error))
+      .then(onSuccessfulResponse)
+      .catch(onError)
+    };
 
-      }
+    function onSuccessfulResponse(r) {
+        console.log(r.json());
+        return r.json();
+      };
+
+    function onError(r) {
+      console.log("Error: " + r);
+    };
+
 
     function postDataHelper(url) {
       let universe = {"universe": Universe, "width": width};
       postData(url, universe);
-    }
+    };
 
     function postData(url = ``, data = {}) {
         fetch(url, {
@@ -107,14 +113,14 @@
       .then(response => drawBoard(Universe))
       .then(response => console.log('Success:', JSON.stringify(response)))
       .catch(error => console.error('Error:', error));
-    }
+    };
     
     function selectFigure() {
       let figureSelector = document.getElementById("figures");
       let selection = figureSelector.options[figureSelector.selectedIndex].value;
       Universe = eval(selection);
       drawBoard(Universe);
-    }
+    };
 
   </script>
   <br/>
