@@ -1,36 +1,43 @@
-from flask import jsonify, request
+from flask import jsonify, request, url_for
 from app.api import bp
 from app import gol
+from app import zoo
 
-@bp.route('/v1/lifeforms', methods=['GET'])
-def lifeform_request():
-    data = request.get_json() or {}
-    # TODO add validation
-    str_universe = data['lifeform']
-    width = int(data['width'])
+z = zoo.Zoo("test")
+
+@bp.route('/v1/lifeforms', methods=['PUT'])
+def add_lifeform():
+    resp = request.get_json() or {}
+    label, cells, width = [resp[k] for k in ('label', 'cells', 'width')]
     
-    universe = gol.string_to_universe(str_universe, width)
-
-    u_output = {"universe": gol.universe_to_string(gol.universe_generation(universe, width)), "width": width}
-
-    response = jsonify(output) # output is variable
-    response.status_code = 200
-    response.headers['Location'] = "api/game"
+    lf = zoo.Lifeform(label, cells, width)
+    z.add(lf)
+    response = jsonify(lf.label)
     return response
 
+@bp.route('/v1/lifeforms/<string:label>', methods=['GET'])
+def get_lifeform(label):
+    lf = z.get(label)
 
-@bp.route('/v1/lifeforms', methods=['POST'])
-def generation_request():
-    data = request.get_json() or {}
-    # TODO add validation
-    str_universe = data['universe']
-    width = int(data['width'])
-    
-    universe = gol.string_to_universe(str_universe, width)
-
-    u_output = {"universe": gol.universe_to_string(gol.universe_generation(universe, width)), "width": width}
-
-    response = jsonify(u_output)
+    response = jsonify(lf) 
     response.status_code = 200
-    response.headers['Location'] = "api/game"
+    response.headers['Location'] = "v1/lifeforms"
+    return response
+
+@bp.route('/v1/lifeforms', methods=['GET'])
+def get_lifeforms():
+    lf = z.list()
+
+    response = jsonify(lf) 
+    response.status_code = 200
+    response.headers['Location'] = "v1/lifeforms"
+    return response
+
+@bp.route('/v1/lifeforms/<string:label>', methods=['DELETE'])
+def delete_lifeform(label):
+    lf = z.remove(label)
+
+    response = jsonify(lf) 
+    response.status_code = 200
+    response.headers['Location'] = "v1/lifeforms"
     return response
