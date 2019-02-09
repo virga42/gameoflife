@@ -2,17 +2,22 @@ from flask import jsonify, request, url_for
 from app.api import bp
 from app import gol
 from app import zoo
+from app.api.errors import bad_request
 
 z = zoo.Zoo("test")
 
 @bp.route('/v1/lifeforms', methods=['PUT'])
 def add_lifeform():
-    resp = request.get_json() or {}
-    label, cells, width = [resp[k] for k in ('label', 'cells', 'width')]
+    data = request.get_json() or {}
+    if 'label' not in data or 'cells' not in data or 'width' not in data:
+        return bad_request('must include label, cells and width in request')
+    else:
+        label, cells, width = [data[k] for k in ('label', 'cells', 'width')]
     
     lf = zoo.Lifeform(label, cells, width)
     z.add(lf)
     response = jsonify(lf.label)
+    response.status_code = 201
     return response
 
 @bp.route('/v1/lifeforms/<string:label>', methods=['GET'])
