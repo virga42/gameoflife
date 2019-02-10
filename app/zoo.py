@@ -4,6 +4,7 @@ Zoo of lifeforms for Conway's Game of Life
 Created by Tom Callahan
 2/1/2019
 """
+import csv
 class Zoo(object):
     def __init__(self, name):
         self.name = name
@@ -35,7 +36,7 @@ class Zoo(object):
                         "width": lf.width}
         return resp
 
-    def list(self):
+    def lst(self):
         lifeforms = map(lambda x: x.label, self.zoo)
         return list(lifeforms)
 
@@ -45,3 +46,14 @@ class Lifeform(object):
         self.label = label
         self.cells = cells
         self.width = width
+
+
+def load_zoo(store):
+    z = Zoo("default")
+    with open(store,'r') as f:
+        reader = csv.reader(f, delimiter='\t')
+        for label, cells, width in reader:
+            z.add(Lifeform(label, cells, width))
+    return z
+
+            

@@ -55,4 +55,4 @@ class TestZoo(unittest.TestCase):
         self.z6.add(self.lifeform1)
         self.z6.add(self.lifeform2)
         self.z6.add(self.lifeform3)
-        self.assertEqual(self.z6.list(), ["glider", "exploder", "tenCellRow"])
+        self.assertEqual(self.z6.lst(), ["glider", "exploder", "tenCellRow"])

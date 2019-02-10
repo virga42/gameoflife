@@ -4,7 +4,8 @@ from app import gol
 from app import zoo
 from app.api.errors import bad_request
 
-z = zoo.Zoo("test")
+path_to_store = "/Users/tcallahan/Documents/Personal/programming/GameOfLife/app/zoo_storage.txt"
+z = zoo.load_zoo(path_to_store)
 
 @bp.route('/v1/lifeforms', methods=['PUT'])
 def add_lifeform():
@@ -31,7 +32,7 @@ def get_lifeform(label):
 
 @bp.route('/v1/lifeforms', methods=['GET'])
 def get_lifeforms():
-    lf = z.list()
+    lf = z.lst()
 
     response = jsonify(lf) 
     response.status_code = 200
