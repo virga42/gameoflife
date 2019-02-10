@@ -109,26 +109,26 @@ def universe_to_string(universe):
         s += ''.join(str(n) for n in row)
     return s
 
-def figure_creator(fig, width, height):
+def figure_creator(fig, board_width, board_height):
     """
     Array Int Int -> String
     Returns the string of a universe with a given figure in its center
     """
     fig_h = len(fig)
     fig_w = len(fig[0])
-    pad_top = int(((height - fig_h)) / 2)
-    pad_bot = height - pad_top - fig_h 
-    pad_lft = int(((width - fig_w) / 2))
-    pad_rgt = width - pad_lft - fig_w
+    pad_top = int(((board_height - fig_h)) / 2)
+    pad_bot = board_height - pad_top - fig_h 
+    pad_lft = int(((board_width - fig_w) / 2))
+    pad_rgt = board_width - pad_lft - fig_w
 
-    str_top = pad_top * width * '0'
+    str_top = pad_top * board_width * '0'
 
     str_middle = ''
     for r in fig:
         str_r = ''.join(str(e) for e in r)
         str_middle += (pad_lft * '0') + str_r + (pad_rgt * '0')
 
-    str_bot = pad_bot * width * '0'
+    str_bot = pad_bot * board_width * '0'
 
     return str_top + str_middle + str_bot    
 
