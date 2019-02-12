@@ -56,4 +56,7 @@ def load_zoo(store):
             z.add(Lifeform(label, cells, width))
     return z
 
+def save_zoo(store):
+    pass
+
             
