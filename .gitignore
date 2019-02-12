@@ -24,3 +24,8 @@ instance/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Node
+node_modules/*
+package.json
+package-lock.json
