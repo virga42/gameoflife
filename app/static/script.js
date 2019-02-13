@@ -91,8 +91,6 @@ async function createFigurePicker() {
   } catch(err) {
     console.log(err)
   }
-  // let figureList = resp['list'];
-  console.log(figureList['list']);
 
   let dropdown = document.getElementById("figuresDropdown");
 
@@ -106,7 +104,6 @@ async function createFigurePicker() {
 };
 
 async function getFigureList(url = ``) {
-  // let figureChoice = document.getElementById("figurejs");
   let response = await fetch(url, {method: "GET" });
   if (response.status == 200) {
     return response.json();
