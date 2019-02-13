@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Game of Life</title>
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+  <script type="text/javascript" src="{{ url_for('static',filename='script.js') }}"></script>
 </head>
 <body>
-  <script type="text/javascript" src="{{ url_for('static',filename='script.js') }}"></script>
   <h1>Welcome to Conway's Game of Life!</h1>
   <div class="flex-container">
     <div>
@@ -17,16 +17,12 @@
     <div class="palette" style="background:rgb(233, 233, 233);padding:20px"> 
       <button type="button" onclick="postNextData('http://localhost:5000/api/game')">Next</button>
       <br/>
-      <select id="figures">
-        <option value="glider" selected="selected">Glider</option>
-        <option value="small_exploder">Small Exploder</option>
-        <option value="exploder">Exploder</option>
-        <option value="ten_cell_row">Ten Cell Row</option>
-        <option value="lightweight_spaceship">Lightweight Spaceship</option>
-        <option value="tumbler">Tumbler</option>
+      <select id="figuresDropdown">
+          <option>Choose a figure</option>
       </select>
       <button type="button" onclick="getFigure('http://localhost:5000/api/v1/lifeforms')">Select</button>
     </div>
   </div>
+  <script type="text/javascript">createFigurePicker()</script>
 </body> 
 </html>

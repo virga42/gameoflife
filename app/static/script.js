@@ -71,7 +71,7 @@ function postData(url = ``, data = {}) {
 };
 
 function getFigure(url = ``, label) {
-  let figureSelector = document.getElementById("figures");
+  let figureSelector = document.getElementById("figuresDropdown");
   let selection = figureSelector.options[figureSelector.selectedIndex].value;
   url = url + '/' + selection
   fetch(url, { method: "GET" })
@@ -80,4 +80,37 @@ function getFigure(url = ``, label) {
   .then(response => drawBoard(universe))
   .then(response => console.log('Success', JSON.stringify(response)))
   .catch(error => console.error('Error', error))
+};
+
+async function createFigurePicker() {
+  url = 'http://localhost:5000/api/v1/lifeforms';
+
+  let figureList;
+  try {
+    figureList = await getFigureList(url);
+  } catch(err) {
+    console.log(err)
+  }
+  // let figureList = resp['list'];
+  console.log(figureList['list']);
+
+  let dropdown = document.getElementById("figuresDropdown");
+
+  let figures = figureList['list'];
+  for (f = 0; f < figures.length; f++) {
+    opt = document.createElement("option");
+    opt.text = figures[f]['label'];
+    opt.value = figures[f]['label'];
+    dropdown.options.add(opt);
+  };
+};
+
+async function getFigureList(url = ``) {
+  // let figureChoice = document.getElementById("figurejs");
+  let response = await fetch(url, {method: "GET" });
+  if (response.status == 200) {
+    return response.json();
+  } else {
+    throw new HttpError(response);
+  };
 };
