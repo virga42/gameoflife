@@ -31,7 +31,7 @@ def get_lifeform(label):
     return response
 
 @bp.route('/v1/lifeforms', methods=['GET'])
-def get_lifeforms():
+def get_lifeform_list():
     lf = z.lst()
 
     response = jsonify(lf) 
