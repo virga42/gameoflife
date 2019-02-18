@@ -55,14 +55,9 @@ class TestZoo(unittest.TestCase):
         self.z6.add(self.lifeform1)
         self.z6.add(self.lifeform2)
         self.z6.add(self.lifeform3)
-        self.assertEqual(self.z6.lst(), { "list": [{"label": "glider"}, {"label": "exploder"}, {"label": "tenCellRow"}]})
+        self.assertEqual(self.z6.lst(), ["glider","exploder", "tenCellRow"])
 
     """ Testing loading a zoo from repo """
     def test_loading_zoo_from_repo(self):
         self.z7 = zoo.load_zoo("/Users/tcallahan/Documents/Personal/programming/GameOfLife/app/zoo_storage.txt")
-        self.assertEqual(self.z7.lst(), { "list": [ {"label": "glider"},
-                                          {"label": "small_exploder"},
-                                          {"label": "exploder"},
-                                          {"label": "ten_cell_row"},
-                                          {"label": "lightweight_spaceship"},
-                                          {"label": "tumbler"}]})
+        self.assertEqual(self.z7.lst(), [ "glider", "small_exploder", "exploder", "ten_cell_row", "lightweight_spaceship", "tumbler"])

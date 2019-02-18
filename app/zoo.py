@@ -37,11 +37,8 @@ class Zoo(object):
         return resp
 
     def lst(self):
-        lf_list = []
-        for label in map(lambda x: x.label, self.zoo):
-            lf_list.append({"label": label})
-        return {"list": lf_list}
-
+        """ Returns a list of the labels of zoo lifeforms """
+        return [lifeform.label for lifeform in self.zoo]
 
 
 class Lifeform(object):

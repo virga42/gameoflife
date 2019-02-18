@@ -18,6 +18,16 @@ body {
     width: 300 px;
 }
 
+.button {
+    color: #333;
+    display: inline-block;
+    width: 7.8em;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.5em;
+    border: .06em solid #0066cc;
+  }
+
 canvas {
     background: rgb(233, 233, 233);
     margin: 20 px;

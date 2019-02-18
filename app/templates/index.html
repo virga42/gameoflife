@@ -4,25 +4,29 @@
   <meta charset="UTF-8">
   <title>Game of Life</title>
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
-  <script type="text/javascript" src="{{ url_for('static',filename='script.js') }}"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <h1>Welcome to Conway's Game of Life!</h1>
   <div class="flex-container">
     <div>
-      <canvas id="myCanvas" width="800" height="600"></canvas>
-      <script>drawBoard();</script>
-    </div>
+      <canvas id="myCanvas" width="800" height="700"></canvas>
+      <!-- <script>drawBoard();</script> -->
+
+      <!-- <div style="background:rgb(233, 233, 233);padding:20px">  -->
+        <a id="nextGeneration" class="button" href="javascript:void(0);">Next</a>
+        
+        <br/>
+        <select id="figuresDropdown">
+            <option>Choose a figure</option>
+        </select>
+        <button type="button" onclick="selectFigure('http://localhost:5000/api/v1/lifeforms')">Select</button>
+      <!-- </div> -->
   
-    <div class="palette" style="background:rgb(233, 233, 233);padding:20px"> 
-      <button type="button" onclick="postNextData('http://localhost:5000/api/game')">Next</button>
-      <br/>
-      <select id="figuresDropdown">
-          <option>Choose a figure</option>
-      </select>
-      <button type="button" onclick="getFigure('http://localhost:5000/api/v1/lifeforms')">Select</button>
     </div>
   </div>
-  <script type="text/javascript">createFigurePicker()</script>
 </body> 
+<script type="text/javascript" src="{{ url_for('static',filename='script.js') }}"></script>
+<script type="text/javascript">createFigurePicker()</script>
+
 </html>
