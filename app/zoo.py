@@ -5,13 +5,16 @@ Created by Tom Callahan
 2/1/2019
 """
 import csv
+
+
 class Zoo(object):
     def __init__(self, name):
         self.name = name
         self.zoo = []
-    
+
     def add(self, lifeform):
         """ Add a given lifeform to a zoo """
+        """ TODO - https://docs.python.org/3/reference/datamodel.html#emulating-container-types """
         lifeform_exists = False
         for idx, lf in enumerate(self.zoo):
             if lf.label == lifeform.label:
@@ -31,8 +34,8 @@ class Zoo(object):
         resp = {}
         for idx, lf in enumerate(self.zoo):
             if lf.label == label:
-                resp = {"label": lf.label, 
-                        "cells": lf.cells, 
+                resp = {"label": lf.label,
+                        "cells": lf.cells,
                         "width": lf.width}
         return resp
 
@@ -50,13 +53,12 @@ class Lifeform(object):
 
 def load_zoo(store):
     z = Zoo("default")
-    with open(store,'r') as f:
+    with open(store, 'r') as f:
         reader = csv.reader(f, delimiter='\t')
         for label, cells, width in reader:
             z.add(Lifeform(label, cells, width))
     return z
 
+
 def save_zoo(store):
     pass
-
-            
