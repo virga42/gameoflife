@@ -14,15 +14,22 @@ class GameOfLife {
     return this.universeGenerator.getUniverse(universe);
   }
 
-  displayUniverse(universe) {
-    return this.universeDisplay.displayUniverse(universe);
+  displayUniverse() {
+    let textUniverse = ""
+    if (this.liveCellCount > 0) {
+      for (let [cellX, cellY] of this.liveCells) {
+        let textCell = cellX + ", " + cellY
+        textUniverse += textCell;
+      };
+    };
+    return textUniverse;
   }
 
   initialize(population) {
     if (Array.isArray(population)) {
       this.liveCellCount += population.length;
-      for (let i = 0; i < population.length; i++) {
-        this.liveCells.push(population[i]);
+      for (let cell of population) {
+        this.liveCells.push(cell);
       }
     }
   }
@@ -41,20 +48,20 @@ class GameOfLife {
 
   breedCells(cells) {
     // this.liveCellCount += cells.length;
-    for (let i = 0; i < cells.length; i++) {
-      if (!this.cellExists(cells[i])) {
+    for (let cell of cells) {
+      if (!this.cellExists(cell)) {
         this.liveCellCount += 1;
-        this.liveCells.push(cells[i]);
+        this.liveCells.push(cell);
       }
     }
   }
 
   cellExists(cell) {
     let exists = false;
-    for (let i = 0; i < this.liveCells.length; i++) {
+    for (let [cellX, cellY] of this.liveCells) {
       if (
-        cell[0] === this.liveCells[i][0] &&
-        cell[1] === this.liveCells[i][1]
+        cell[0] === cellX &&
+        cell[1] === cellY
       ) {
         exists = true;
         break;

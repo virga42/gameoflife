@@ -29,13 +29,25 @@ function mockUniverseDisplay(expectedTextUniverse) {
 //   });
 // });
 
-// describe("displaying universe as text", () => {
-//   test("rendering universe as ASCII", () => {
-//     expect(testUniverseGeneration.displayUniverse()).toEqual(
-//       "111000111"
-//     );
-//   });
-// });
+describe("displaying universe in text format", () => {
+  test("can render an empty universe ", () => {
+    let gol = new GameOfLife();
+    gol.initialize();
+    expect(gol.displayUniverse()).toEqual("");
+  });
+  test("can render a universe with a single cell ", () => {
+    let gol = new GameOfLife();
+    let singleCell = [0, 0];
+    gol.initialize([singleCell]);
+    expect(gol.displayUniverse()).toEqual("0, 0");
+  });
+  test("can render a universe with multiple cells ", () => {
+    let gol = new GameOfLife();
+    let multipleCells = [[0, 0], [1, 1]];
+    gol.initialize(multipleCells);
+    expect(gol.displayUniverse()).toEqual("0, 0/n1, 1");
+  });
+});
 
 describe("initializing Game of Life", () => {
   test("can initialize empty population", () => {
@@ -75,8 +87,8 @@ describe("adding cells to population", () => {
     let gol = new GameOfLife();
     let liveCells = [[0, 0]];
     gol.initialize(liveCells);
-    gol.breedCells(liveCells);
+    gol.breedCells(liveCells); // add a cell at the same location
     expect(gol.numberLiveCells()).toEqual(1);
     expect(gol.coordinatesLiveCells()).toEqual(liveCells);
-  })
+  });
 });
