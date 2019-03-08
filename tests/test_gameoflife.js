@@ -1,21 +1,21 @@
 const GameOfLife = require("../app/static/gameoflife");
 
-const testUniverseGeneration = new GameOfLife(
-  mockUniverseGenerator({ "universe:": "010000010", width: 3 }),
-  mockUniverseDisplay("111000111")
-);
+// const testUniverseGeneration = new GameOfLife(
+//   mockUniverseGenerator({ "universe:": "010000010", width: 3 }),
+//   mockUniverseDisplay("111000111")
+// );
 
-function mockUniverseGenerator(expectedLifeform) {
-  return {
-    getUniverse: function(lifeform) {
-      return expectedLifeform;
-    }
-  };
-}
+// function mockUniverseGenerator(expectedLifeform) {
+//   return {
+//     getUniverse: function(lifeform) {
+//       return expectedLifeform;
+//     }
+//   };
+// }
 
 function mockUniverseDisplay(expectedTextUniverse) {
   return {
-    displayUniverse: function(universe) {
+    displayUniverse: function(liveCells) {
       return expectedTextUniverse;
     }
   };
@@ -31,22 +31,22 @@ function mockUniverseDisplay(expectedTextUniverse) {
 
 describe("displaying universe in text format", () => {
   test("can render an empty universe ", () => {
-    let gol = new GameOfLife();
+    let gol = new GameOfLife(mockUniverseDisplay(""));
     gol.initialize();
-    expect(gol.displayUniverse()).toEqual("");
+    expect(gol.displayUniverse("")).toEqual("");
   });
   test("can render a universe with a single cell ", () => {
-    let gol = new GameOfLife();
+    let gol = new GameOfLife(mockUniverseDisplay());
     let singleCell = [0, 0];
     gol.initialize([singleCell]);
     expect(gol.displayUniverse()).toEqual("0, 0");
   });
-  test("can render a universe with multiple cells ", () => {
-    let gol = new GameOfLife();
-    let multipleCells = [[0, 0], [1, 1]];
-    gol.initialize(multipleCells);
-    expect(gol.displayUniverse()).toEqual("0, 0/n1, 1");
-  });
+  // test("can render a universe with multiple cells ", () => {
+  //   let gol = new GameOfLife();
+  //   let multipleCells = [[0, 0], [1, 1]];
+  //   gol.initialize(multipleCells);
+  //   expect(gol.displayUniverse()).toEqual("0, 0/n1, 1");
+  // });
 });
 
 describe("initializing Game of Life", () => {

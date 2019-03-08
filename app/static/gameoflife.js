@@ -3,26 +3,18 @@
 // February 2019
 
 class GameOfLife {
-  constructor(universeGenerator, universeDisplay) {
-    this.universeGenerator = universeGenerator;
+  constructor(universeDisplay) {
     this.universeRenderer = universeDisplay;
     this.liveCellCount = 0;
     this.liveCells = [];
   }
 
-  getUniverse(universe) {
-    return this.universeGenerator.getUniverse(universe);
-  }
+  // getUniverse(universe) {
+  //   return this.universeGenerator.getUniverse(universe);
+  // }
 
-  displayUniverse() {
-    let textUniverse = ""
-    if (this.liveCellCount > 0) {
-      for (let [cellX, cellY] of this.liveCells) {
-        let textCell = cellX + ", " + cellY
-        textUniverse += textCell;
-      };
-    };
-    return textUniverse;
+  displayUniverse(population) {
+    return this.universeRenderer.displayUniverse(this.liveCells);
   }
 
   initialize(population) {
@@ -59,10 +51,7 @@ class GameOfLife {
   cellExists(cell) {
     let exists = false;
     for (let [cellX, cellY] of this.liveCells) {
-      if (
-        cell[0] === cellX &&
-        cell[1] === cellY
-      ) {
+      if (cell[0] === cellX && cell[1] === cellY) {
         exists = true;
         break;
       }
@@ -84,6 +73,21 @@ function universeGeneratorFromWebRequest(host, callback) {
       })
         .then(response => response.json())
         .then(nextUniverse => callback(nextUniverse));
+    }
+  };
+}
+
+function renderTextUniverse() {
+  return {
+    displayUniverse: function(livingCells) {
+      let textUniverse = "";
+      if (this.liveCellCount > 0) {
+        for (let [cellX, cellY] of livingCells) {
+          let textCell = cellX + ", " + cellY;
+          textUniverse += textCell;
+        }
+      }
+      return textUniverse;
     }
   };
 }
