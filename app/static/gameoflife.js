@@ -13,8 +13,11 @@ class GameOfLife {
   //   return this.universeGenerator.getUniverse(universe);
   // }
 
-  displayUniverse(population) {
-    return this.universeRenderer.displayUniverse(this.liveCells);
+  displayUniverse() {
+    for (let cell of this.liveCells) {
+              this.universeRenderer.placeCharacter("1");
+      }
+    return this.universeRenderer.drawNew(this.liveCells);
   }
 
   initialize(population) {
@@ -77,20 +80,7 @@ function universeGeneratorFromWebRequest(host, callback) {
   };
 }
 
-function renderTextUniverse() {
-  return {
-    displayUniverse: function(livingCells) {
-      let textUniverse = "";
-      if (this.liveCellCount > 0) {
-        for (let [cellX, cellY] of livingCells) {
-          let textCell = cellX + ", " + cellY;
-          textUniverse += textCell;
-        }
-      }
-      return textUniverse;
-    }
-  };
-}
+
 
 function universeDisplayHTML(universe) {
   return {};

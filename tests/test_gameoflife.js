@@ -1,4 +1,5 @@
 const GameOfLife = require("../app/static/gameoflife");
+const textDisplayExports = require("../app/static/textDisplay");
 
 // const testUniverseGeneration = new GameOfLife(
 //   mockUniverseGenerator({ "universe:": "010000010", width: 3 }),
@@ -15,7 +16,7 @@ const GameOfLife = require("../app/static/gameoflife");
 
 function mockUniverseDisplay(expectedTextUniverse) {
   return {
-    displayUniverse: function(liveCells) {
+    displayUniverse: function() {
       return expectedTextUniverse;
     }
   };
@@ -29,25 +30,73 @@ function mockUniverseDisplay(expectedTextUniverse) {
 //   });
 // });
 
+function initializeGameOfLife() {
+  return new GameOfLife(textDisplayExports.createTextRenderer());
+}
+
 describe("displaying universe in text format", () => {
+  let gol = initializeGameOfLife();
+
   test("can render an empty universe ", () => {
-    let gol = new GameOfLife(mockUniverseDisplay(""));
     gol.initialize();
-    expect(gol.displayUniverse("")).toEqual("");
+    expect(gol.displayUniverse()).toEqual("");
   });
   test("can render a universe with a single cell ", () => {
-    let gol = new GameOfLife(mockUniverseDisplay());
     let singleCell = [0, 0];
     gol.initialize([singleCell]);
-    expect(gol.displayUniverse()).toEqual("0, 0");
+    expect(gol.displayUniverse()).toEqual("1");
   });
+  // test("can render a universe with a single cell ", () => {
+  //   let singleCell = [1, 0];
+  //   gol.initialize([singleCell]);
+  //   expect(gol.displayUniverse()).toEqual("1");
+  // });
   // test("can render a universe with multiple cells ", () => {
-  //   let gol = new GameOfLife();
   //   let multipleCells = [[0, 0], [1, 1]];
   //   gol.initialize(multipleCells);
   //   expect(gol.displayUniverse()).toEqual("0, 0/n1, 1");
   // });
 });
+
+describe("create a text renderer", () => {
+  test("can create emptiness", () => {
+    let textRenderer = new  textDisplayExports.createTextRenderer();
+    expect(textRenderer.drawNew()).toEqual("");
+  })
+  test("can output a character at a default position", () => {
+    let textRenderer = new  textDisplayExports.createTextRenderer();
+    textRenderer.placeCharacterNew("0")
+    expect(textRenderer.drawNew()).toEqual("0");
+  })
+  test("can output a character at given position", () => {
+    let textRenderer = new  textDisplayExports.createTextRenderer();
+    let x = 0
+    let y = 0
+    textRenderer.placeCharacterNew("0", x, y)
+    expect(textRenderer.drawNew()).toEqual("0");
+
+    x = 1
+    y = 0
+    textRenderer.placeCharacterNew("1", x, y)
+    expect(textRenderer.drawNew()).toEqual("01");
+
+    x = 0
+    y = 1
+    textRenderer.placeCharacterNew("2", x, y)
+    expect(textRenderer.drawNew()).toEqual("01\n2");
+
+    x = 1
+    y = 1
+    textRenderer.placeCharacterNew("3", x, y)
+    expect(textRenderer.drawNew()).toEqual("01\n23");
+
+    x = 3
+    y = 1
+    textRenderer.placeCharacterNew("4", x, y)
+    expect(textRenderer.drawNew()).toEqual("01  \n23 4");
+  })
+  
+})
 
 describe("initializing Game of Life", () => {
   test("can initialize empty population", () => {
