@@ -24,7 +24,7 @@ jsonschema==2.6.0
 MarkupSafe==1.1.0
 pathspec==0.5.5
 pyasn1==0.4.5
-Pygments==2.3.1
+Pygments==2.7.4
 python-dateutil==2.7.5
 PyYAML==3.13
 requests==2.20.1
